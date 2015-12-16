@@ -1,9 +1,4 @@
-var React = require('react');
+import React from 'react';
+import League from './components/League';
 
-var Tntfleague = React.createClass({
-	render () {
-		return <div>Hello</div>;
-	}
-});
-
-React.render(<Tntfleague />, document.getElementsByTagName('body')[0]);
+React.render(<League />, document.getElementsByTagName('body')[0]);
