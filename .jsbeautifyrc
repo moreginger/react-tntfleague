@@ -1,0 +1,13 @@
+{
+  "html": {
+    "end_with_newline": true,
+    "indent_size": 2,
+    "indent_char": " ",
+    "indent_handlebars": true,
+    "indent_with_tabs": false,
+    "jslint_happy": true,
+    "wrap_attributes": "force",
+    "wrap_attributes_indent_size": 2,
+    "wrap_line_length": 120,
+  },
+}
