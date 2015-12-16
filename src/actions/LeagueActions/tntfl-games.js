@@ -1,5 +1,7 @@
+import { tntflurl } from './tntfl-config'
+
 export function getGames(from, to, callback) {
-  var url = 'https://www.int.corefiling.com/~tlr/tntfl/games.cgi?view=json&from=' + from + '&to=' + to;
+  var url = tntflurl + '?view=json&from=' + from + '&to=' + to;
   var request = new XMLHttpRequest();
   request.open('GET', url, true);
   request.onload = function() {
