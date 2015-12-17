@@ -3,14 +3,20 @@ import { LeagueActions } from '../../actions/LeagueActions';
 
 import moment from 'moment';
 
+var _seasons = [];
+
 var store = Reflux.createStore({
 	listenables: LeagueActions,
-	onLoadCompleted: function(games) {
-    this.trigger(games);
+	onLoadCompleted: function(seasons) {
+    _seasons = seasons;
+		this.trigger('UPDATE');
 	},
 	onLoadFailed: function() {
     // Should do something
 		console.log('store-loadFailed');
+	},
+	getAll: function() {
+		return _seasons;
 	}
 });
 

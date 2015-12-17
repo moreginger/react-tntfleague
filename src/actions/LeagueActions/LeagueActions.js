@@ -60,6 +60,9 @@ function season(month, playerMap) {
     }
     return b.difference - a.difference;
   });
+  for (let i = 0; i < table.length; i++) {
+    table[i].rank = i + 1;
+  }
   return {
     month: month,
     table: table

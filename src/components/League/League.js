@@ -13,16 +13,25 @@ class League extends Component {
 			tab: 1,
 			data: []
 		};
+		this.updateFromStore();
 	}
 
-  onStoreChange = (data) => {
+	updateFromStore = () => {
+		let data = LeagueStore.getAll();
+		if (data.length == 0) {
+			return;
+		}
 		let table = data[0].table;
 		let champion = data[1].table[0].name;
-		champion = table.filter(x => x.name === champion);
-    champion[0].rowClass = 'champion';
+		champion = table.filter(x => x.name === champion)[0];
+		champion.rowClass = 'champion';
 		this.setState({
-  		data: table
-  	});
+			data: table
+		});
+	}
+
+  onStoreChange = (evt) => {
+		this.updateFromStore();
   }
 
   componentDidMount = () => {
