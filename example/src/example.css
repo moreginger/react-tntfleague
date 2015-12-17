@@ -1,2 +1,6 @@
 @import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import '../../node_modules/react-bootstrap-table/css/react-bootstrap-table-all.min.css';
+
+tr.champion {
+  background-color: yellow !important
+}

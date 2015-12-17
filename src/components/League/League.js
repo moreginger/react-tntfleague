@@ -16,8 +16,12 @@ class League extends Component {
 	}
 
   onStoreChange = (data) => {
-  	this.setState({
-  		data: data[0].table
+		let table = data[0].table;
+		let champion = data[1].table[0].name;
+		champion = table.filter(x => x.name === champion);
+    champion[0].rowClass = 'champion';
+		this.setState({
+  		data: table
   	});
   }
 
