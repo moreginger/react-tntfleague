@@ -17,7 +17,7 @@ class League extends Component {
 
   onStoreChange = (data) => {
   	this.setState({
-  		data: data
+  		data: data[0].table
   	});
   }
 

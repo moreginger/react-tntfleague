@@ -1,19 +1,21 @@
 import { tntflurl } from './tntfl-config'
 
-export function getGames(from, to, callback) {
-  var url = tntflurl + '?view=json&from=' + from + '&to=' + to;
+export function getGames(resolve, reject, from, to) {
+  var url = tntflurl + '?view=json';
+  url += from ? '&from=' + from : '';
+  url += to ? '&to=' + to : '';
   var request = new XMLHttpRequest();
   request.open('GET', url, true);
-  request.onload = function() {
+  request.onload = () => {
     if (request.status >= 200 && request.status < 400) {
-      callback(JSON.parse(request.responseText));
+      resolve(JSON.parse(request.responseText));
     }
     else {
-      console.log(request)
+      reject();
     }
   };
-  request.onerror = function() {
-    console.log(request)
+  request.onerror = () => {
+    reject();
   };
   request.send();
 }

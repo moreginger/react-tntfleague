@@ -1,5 +1,5 @@
 module.exports = {
-	entry: getEntrySources(['./src/Tntfleague.js']),
+	entry: getEntrySources(['babel-polyfill', './src/Tntfleague.js']),
 	output: {
 		publicPath: 'http://localhost:8080/',
 		filename: 'build/bundle.js'
