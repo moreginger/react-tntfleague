@@ -48,13 +48,20 @@ class League extends Component {
   	});
   }
 	render = () => {
+		var content;
+		if (this.state.tab === 1) {
+			content = <LeagueTable data={this.state.data}/>;
+		}
+		else {
+			content = <span/>;
+		}
 		return (
       <div>
         <Nav bsStyle='tabs' activeKey={this.state.tab} onSelect={this.handleSelect}>
           <NavItem eventKey={1}>Current</NavItem>
           <NavItem eventKey={2}>All Time</NavItem>
         </Nav>
-        <LeagueTable data={this.state.data}/>
+				{content}
       </div>
 		);
 	}
