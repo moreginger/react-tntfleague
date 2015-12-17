@@ -24,10 +24,18 @@ function games(json) {
       players: [
         {
           name: g.blue.name,
+          goals: {
+            scored: g.blue.score,
+            conceded: g.red.score
+          },
           points: points(score)
         },
         {
           name: g.red.name,
+          goals: {
+            scored: g.red.score,
+            conceded: g.blue.score
+          },
           points: points(-score)
         },
       ]
@@ -39,11 +47,19 @@ function games(json) {
 
 function season(month, playerMap) {
   let table = Array.from(playerMap.entries());
-  table.sort((a, b) => b[1] - a[1]);
   table = table.map(x => ({
     name: x[0],
-    points: x[1]
+    points: x[1].points,
+    difference: x[1].goals.scored - x[1].goals.conceded,
+    scored: x[1].goals.scored,
+    conceded: x[1].goals.conceded
   }));
+  table.sort((a, b) => {
+    if (b.points !== a.points) {
+      return b.points - a.points;
+    }
+    return b.difference - a.difference;
+  });
   return {
     month: month,
     table: table
@@ -65,9 +81,18 @@ function* seasons(json) {
     }
     x.players.forEach(y => {
       if (!players.has(y.name)) {
-        players.set(y.name, 0);
+        players.set(y.name, {
+          points: 0,
+          goals: {
+            scored: 0,
+            conceded: 0
+          }
+        });
       }
-      players.set(y.name, players.get(y.name) + y.points);
+      let stats = players.get(y.name);
+      stats.points += y.points;
+      stats.goals.scored += y.goals.scored;
+      stats.goals.conceded += y.goals.conceded;
     });
   }
   yield season(current_month, players);
