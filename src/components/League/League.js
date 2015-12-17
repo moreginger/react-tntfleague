@@ -32,8 +32,9 @@ class League extends Component {
 		let allTime = new Map();
     seasons.map(x => x.table[0].name).forEach(x => allTime.set(x, (allTime.has(x) ? allTime.get(x) + 1 : 1)));
 		allTime = Array.from(allTime.entries()).map(x => ({
-			label: x[0],
-			value: x[1]
+			label: x[0] + ' - '+ x[1],
+			value: x[1],
+			children: []
 		}));
 		allTime.sort((a, b) => b.value - a.value);
 		allTime = {
