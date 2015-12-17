@@ -1,0 +1,6 @@
+{
+  "name": "AllTime",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./AllTime.js"
+}

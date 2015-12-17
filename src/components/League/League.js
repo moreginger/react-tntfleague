@@ -2,8 +2,9 @@ import { LeagueActions } from '../../actions/LeagueActions';
 import { LeagueStore } from '../../stores/LeagueStore';
 
 import React, {	PropTypes, Component } from 'react';
-import { Nav, NavItem } from 'react-bootstrap';
+import { Nav, NavItem, Grid, Row } from 'react-bootstrap';
 import LeagueTable from '../LeagueTable';
+import AllTime from '../AllTime';
 
 class League extends Component {
 
@@ -11,22 +12,39 @@ class League extends Component {
 		super(props);
 		this.state = {
 			tab: 1,
-			data: []
+			table: [],
+			allTime: {
+			}
 		};
 		this.updateFromStore();
 	}
 
 	updateFromStore = () => {
-		let data = LeagueStore.getAll();
-		if (data.length == 0) {
+		let seasons = LeagueStore.getAll();
+		if (seasons.length == 0) {
 			return;
 		}
-		let table = data[0].table;
-		let champion = data[1].table[0].name;
+		let table = seasons[0].table;
+		let champion = seasons[1].table[0].name;
 		champion = table.filter(x => x.name === champion)[0];
 		champion.rowClass = 'champion';
+
+		let allTime = new Map();
+    seasons.map(x => x.table[0].name).forEach(x => allTime.set(x, (allTime.has(x) ? allTime.get(x) + 1 : 1)));
+		allTime = Array.from(allTime.entries()).map(x => ({
+			label: x[0],
+			value: x[1]
+		}));
+		allTime.sort((a, b) => b.value - a.value);
+		allTime = {
+			value: allTime.reduce((sum, ele) => sum + ele.value, 0),
+			label: 'CFL',
+			children: allTime
+		};
+
 		this.setState({
-			data: table
+			table: table,
+			allTime: allTime
 		});
 	}
 
@@ -50,19 +68,21 @@ class League extends Component {
 	render = () => {
 		var content;
 		if (this.state.tab === 1) {
-			content = <LeagueTable data={this.state.data}/>;
+			content = <LeagueTable data={this.state.table}/>;
 		}
 		else {
-			content = <span/>;
+			content = <AllTime data={this.state.allTime}/>;
 		}
 		return (
-      <div>
-        <Nav bsStyle='tabs' activeKey={this.state.tab} onSelect={this.handleSelect}>
-          <NavItem eventKey={1}>Current</NavItem>
-          <NavItem eventKey={2}>All Time</NavItem>
-        </Nav>
-				{content}
-      </div>
+			<Grid fluid>
+			  <Row xs={12} sm={8}>
+	        <Nav bsStyle='tabs' activeKey={this.state.tab} onSelect={this.handleSelect}>
+	          <NavItem eventKey={1}>Current</NavItem>
+	          <NavItem eventKey={2}>All Time</NavItem>
+	        </Nav>
+					{content}
+        </Row>
+			</Grid>
 		);
 	}
 }

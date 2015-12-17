@@ -1,1 +1,1 @@
-export const tntflurl = 'http://localhost:8000/games.cgi'
+export const tntflurl = 'https://www.int.corefiling.com/~tlr/tntfl/games.cgi'
