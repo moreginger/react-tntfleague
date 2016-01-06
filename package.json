@@ -44,6 +44,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack-server": "webpack-dev-server --hot --progress --colors",
     "web-server": "http-server -p 3000 .",
+    "webpack": "webpack",
     "start": "npm run webpack-server & npm run web-server",
     "build": "NODE_ENV=production npm run webpack -p"
   },
