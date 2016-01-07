@@ -18,6 +18,7 @@ class LeagueTable extends Component {
         <TableHeaderColumn dataField='name' dataSort={true} isKey={true}>Name</TableHeaderColumn>
         <TableHeaderColumn dataField='points' dataSort={true}>Points</TableHeaderColumn>
         <TableHeaderColumn dataField='difference' dataSort={true}>Goal difference</TableHeaderColumn>
+        <TableHeaderColumn dataField='win' dataSort={true}>Win %</TableHeaderColumn>
       </BootstrapTable>
     );
   }

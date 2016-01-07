@@ -52,7 +52,8 @@ function season(month, playerMap) {
     points: x[1].points,
     difference: x[1].goals.scored - x[1].goals.conceded,
     scored: x[1].goals.scored,
-    conceded: x[1].goals.conceded
+    conceded: x[1].goals.conceded,
+    win: Math.round(x[1].games.won / x[1].games.played * 100)
   }));
   table.sort((a, b) => {
     if (b.points !== a.points) {
@@ -86,14 +87,20 @@ function* seasons(json) {
       if (!players.has(y.name)) {
         players.set(y.name, {
           points: 0,
+          games: {
+            played: 0,
+            won: 0
+          },
           goals: {
             scored: 0,
             conceded: 0
           }
         });
       }
-      let stats = players.get(y.name);
+      let stats = players.get(y.name)
       stats.points += y.points;
+      stats.games.played += 1;
+      stats.games.won += y.goals.scored > y.goals.conceded ? 1 : 0;
       stats.goals.scored += y.goals.scored;
       stats.goals.conceded += y.goals.conceded;
     });
