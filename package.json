@@ -13,6 +13,7 @@
     "url": "https://github.com/moreginger/react-tntfleague/issues"
   },
   "dependencies": {
+    "font-awesome": "^4.5.0",
     "moment": "^2.10.6",
     "reflux": "^0.3.0"
   },

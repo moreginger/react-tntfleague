@@ -25,9 +25,10 @@ class League extends Component {
 			return;
 		}
 		let table = seasons[0].table;
-		let champion = seasons[1].table[0].name;
-		champion = table.filter(x => x.name === champion)[0];
-		champion.rowClass = 'champion';
+		table.forEach(x => {
+			 let previous = seasons[1].table.find(y => y.name === x.name)
+		   x.previousRank = previous === undefined ? -1 : previous.rank;
+		});
 
 		let allTime = new Map();
     seasons.slice(1).map(x => x.table[0].name).forEach(x => allTime.set(x, (allTime.has(x) ? allTime.get(x) + 1 : 1)));

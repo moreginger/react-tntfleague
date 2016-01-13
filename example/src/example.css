@@ -1,6 +1,15 @@
 @import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 @import '../../node_modules/react-bootstrap-table/css/react-bootstrap-table-all.min.css';
+@import '../../node_modules/font-awesome/css/font-awesome.min.css';
 
-tr.champion {
-  background-color: yellow !important
+i.rank-1 {
+  color: #C98910
+}
+
+i.rank-2 {
+  color: #A8A8A8
+}
+
+i.rank-3 {
+  color: #965A38
 }
