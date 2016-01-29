@@ -31,22 +31,33 @@ class League extends Component {
 		});
 
 		let allTime = new Map();
-    seasons.slice(1).map(x => x.table[0].name).forEach(x => allTime.set(x, (allTime.has(x) ? allTime.get(x) + 1 : 1)));
-		allTime = Array.from(allTime.entries()).map(x => ({
-			label: x[0] + ' - '+ x[1],
-			value: x[1],
-			children: []
-		}));
-		allTime.sort((a, b) => b.value - a.value);
-		allTime = {
-			value: allTime.reduce((sum, ele) => sum + ele.value, 0),
-			label: 'CFL',
-			children: allTime
-		};
+    seasons.slice(1).forEach(x => {
+			let winner = x.table[0].name;
+			let r = allTime.has(winner) ? allTime.get(winner) : { name: winner, wins: 0};
+			r.wins += 1;
+			r.lastWin = x.date.year * 12 + x.date.month;
+			allTime.set(winner, r);
+		});
+		allTime = Array.from(allTime.values());
+		allTime.sort((a, b) => {
+			let winsDiff = b.wins - a.wins;
+			if (winsDiff !== 0) {
+				return winsDiff;
+			}
+			return b.lastWin - a.lastWin;
+		});
 
 		this.setState({
 			table: table,
-			allTime: allTime
+			allTime: {
+				value: allTime.reduce((sum, ele) => sum + ele.wins, 0),
+				label: 'CFL',
+				children: allTime.map(x => ({
+					label: x.name + ' - '+ x.wins,
+					value: x.wins,
+					children: []
+				}))
+			}
 		});
 	}
 
