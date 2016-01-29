@@ -1,1 +1,1 @@
-export const tntflurl = 'https://www.int.corefiling.com/~tlr/tntfl/games.cgi'
+export const tntflurl = 'https://tmm-vm.cfl.io/tntflEAGUE-data/seasons'
