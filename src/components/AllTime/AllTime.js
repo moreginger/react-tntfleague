@@ -34,10 +34,13 @@ class AllTime extends Component {
 
   render() {
     return (
-      <CakeChart data={this.state.selectedNode}
-                 onClick={this.onClick}
-                 coreRadius={100}
-                 ringWidth={80}/>
+      <div>
+        <h4>Division 1 winners</h4>
+        <CakeChart data={this.state.selectedNode}
+                   onClick={this.onClick}
+                   coreRadius={100}
+                   ringWidth={80}/>
+      </div>
     );
   }
 }

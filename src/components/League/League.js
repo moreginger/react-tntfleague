@@ -36,13 +36,17 @@ class League extends Component {
 	}
 
 	getTotalWins = (seasons, division) => {
+		let divisionSize = seasons[1].table.filter(p => p.division === division).length; // TODO this is naughty
 		let allTime = new Map();
 		seasons.slice(1).forEach(x => {
-			let winner = x.table.filter(p => p.division === division)[0].name;
-			let r = allTime.has(winner) ? allTime.get(winner) : { name: winner, wins: 0};
-			r.wins += 1;
-			r.lastWin = x.date.year * 12 + x.date.month;
-			allTime.set(winner, r);
+			let inDivision = x.table.filter(p => p.division === division);
+			if (inDivision.length == divisionSize) {
+				let winner = inDivision[0].name;
+				let r = allTime.has(winner) ? allTime.get(winner) : { name: winner, wins: 0};
+				r.wins += 1;
+				r.lastWin = x.date.year * 12 + x.date.month;
+				allTime.set(winner, r);
+			}
 		});
 		allTime = Array.from(allTime.values());
 		allTime.sort((a, b) => {
