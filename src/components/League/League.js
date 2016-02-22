@@ -3,7 +3,7 @@ import { LeagueStore } from '../../stores/LeagueStore';
 
 import React, {	PropTypes, Component } from 'react';
 import { Nav, NavItem, Grid, Row } from 'react-bootstrap';
-import LeagueTable from '../LeagueTable';
+import Divisions from '../Divisions';
 import AllTime from '../AllTime';
 
 class League extends Component {
@@ -12,27 +12,31 @@ class League extends Component {
 		super(props);
 		this.state = {
 			tab: 1,
-			table: [],
+			divisions: [],
 			allTime: {
 			}
 		};
 		this.updateFromStore();
 	}
 
-	updateFromStore = () => {
-		let seasons = LeagueStore.getAll();
-		if (seasons.length == 0) {
-			return;
-		}
-		let table = seasons[0].table;
-		table.forEach(x => {
-			 let previous = seasons[1].table.find(y => y.name === x.name)
-		   x.previousRank = previous === undefined ? -1 : previous.rank;
+  getDivisions = (season) => {
+		let divisions = [];
+		season.table.forEach(p => {
+			while (p.division > divisions.length) {
+				divisions.push({
+				  name: 'Division ' + (divisions.length + 1),
+					table: []
+				});
+			}
+			divisions[p.division - 1].table.push(p);
 		});
+		return divisions;
+	}
 
+	getTotalWins = (seasons, division) => {
 		let allTime = new Map();
-    seasons.slice(1).forEach(x => {
-			let winner = x.table[0].name;
+		seasons.slice(1).forEach(x => {
+			let winner = x.table.filter(p => p.division === division)[0].name;
 			let r = allTime.has(winner) ? allTime.get(winner) : { name: winner, wins: 0};
 			r.wins += 1;
 			r.lastWin = x.date.year * 12 + x.date.month;
@@ -46,9 +50,23 @@ class League extends Component {
 			}
 			return b.lastWin - a.lastWin;
 		});
+		return allTime;
+	}
 
+	updateFromStore = () => {
+		let seasons = LeagueStore.getAll();
+		if (seasons.length == 0) {
+			return;
+		}
+		let divisions = this.getDivisions(seasons[0]);
+		let table = seasons[0].table;
+		table.forEach(x => {
+			 let previous = seasons[1].table.find(y => y.name === x.name)
+		   x.previousRank = previous === undefined ? -1 : previous.rank;
+		});
+	  let allTime = this.getTotalWins(seasons, 1);
 		this.setState({
-			table: table,
+			divisions: divisions,
 			allTime: {
 				value: allTime.reduce((sum, ele) => sum + ele.wins, 0),
 				label: 'CFL',
@@ -81,7 +99,7 @@ class League extends Component {
 	render = () => {
 		var content;
 		if (this.state.tab === 1) {
-			content = <LeagueTable data={this.state.table}/>;
+			content = <Divisions data={this.state.divisions}/>;
 		}
 		else {
 			content = <AllTime data={this.state.allTime}/>;
