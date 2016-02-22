@@ -28,7 +28,9 @@ class League extends Component {
 					table: []
 				});
 			}
-			divisions[p.division - 1].table.push(p);
+			let table = divisions[p.division - 1].table;
+			p.rank = table.length + 1;
+			table.push(p);
 		});
 		return divisions;
 	}
