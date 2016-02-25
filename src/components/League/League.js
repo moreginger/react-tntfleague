@@ -19,9 +19,9 @@ class League extends Component {
 		this.updateFromStore();
 	}
 
-  getDivisions = (season) => {
+  getDivisions = (fullTable) => {
 		let divisions = [];
-		season.table.forEach(p => {
+		fullTable.forEach(p => {
 			while (p.division > divisions.length) {
 				divisions.push({
 				  name: 'Division ' + (divisions.length + 1),
@@ -63,12 +63,12 @@ class League extends Component {
 		if (seasons.length == 0) {
 			return;
 		}
-		let divisions = this.getDivisions(seasons[0]);
 		let table = seasons[0].table;
 		table.forEach(x => {
-			 let previous = seasons[1].table.find(y => y.name === x.name)
-		   x.previousRank = previous === undefined ? -1 : previous.rank;
+			let previous = seasons[1].table.findIndex(y => y.name === x.name)
+			x.previousRank = previous !== -1 ? previous + 1 : -1;
 		});
+		let divisions = this.getDivisions(table);
 	  let allTime = this.getTotalWins(seasons, 1);
 		this.setState({
 			divisions: divisions,
