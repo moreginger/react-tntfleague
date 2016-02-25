@@ -36,11 +36,10 @@ class League extends Component {
 	}
 
 	getTotalWins = (seasons, division) => {
-		let divisionSize = seasons[1].table.filter(p => p.division === division).length; // TODO this is naughty
 		let allTime = new Map();
 		seasons.slice(1).forEach(x => {
 			let inDivision = x.table.filter(p => p.division === division);
-			if (inDivision.length == divisionSize) {
+			if (inDivision.length > 10) { // Arbitrary. This code should move to the data service.
 				let winner = inDivision[0].name;
 				let r = allTime.has(winner) ? allTime.get(winner) : { name: winner, wins: 0};
 				r.wins += 1;

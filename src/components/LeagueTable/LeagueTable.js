@@ -8,6 +8,10 @@ function nameFormat(cell, row) {
   return cell;
 }
 
+function winFormat(cell, row) {
+  return cell + '%';
+}
+
 class LeagueTable extends Component {
 
   constructor(props) {
@@ -18,18 +22,14 @@ class LeagueTable extends Component {
     return rowData.rowClass;
   }
 
-  nameFormat(cell, row) {
-    return '<i class="glyphicon glyphicon-usd"></i> ' + cell;
-  }
-
   render() {
     return (
       <BootstrapTable data={this.props.data} striped={true} hover={true} condensed={true} trClassName={this.trClass}>
-        <TableHeaderColumn dataField='rank' dataSort={true}>Rank</TableHeaderColumn>
-        <TableHeaderColumn dataField='name' dataSort={true} isKey={true} dataFormat={nameFormat}>Name</TableHeaderColumn>
-        <TableHeaderColumn dataField='points' dataSort={true}>Points</TableHeaderColumn>
-        <TableHeaderColumn dataField='difference' dataSort={true}>Goal difference</TableHeaderColumn>
-        <TableHeaderColumn dataField='win' dataSort={true}>Win %</TableHeaderColumn>
+        <TableHeaderColumn dataField='rank' dataSort={true}>#</TableHeaderColumn>
+        <TableHeaderColumn dataField='name' dataSort={true} isKey={true} dataFormat={nameFormat}>Team</TableHeaderColumn>
+        <TableHeaderColumn dataField='difference' dataSort={true}>GD</TableHeaderColumn>
+        <TableHeaderColumn dataField='win' dataSort={true} dataFormat={winFormat}>W</TableHeaderColumn>
+        <TableHeaderColumn dataField='points' dataSort={true}>PTS</TableHeaderColumn>
       </BootstrapTable>
     );
   }
