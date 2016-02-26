@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Panel } from 'react-bootstrap';
+import { Row, Panel } from 'react-bootstrap';
 
 import LeagueTable from '../LeagueTable';
 
@@ -12,9 +12,11 @@ class Divisions extends Component {
   render() {
     let divs = this.props.data.map(d => {
       return (
-        <Panel header={d.name}>
-          <LeagueTable data={d.table}/>
-        </Panel>
+        <Row>
+          <Panel header={d.name}>
+            <LeagueTable data={d.table}/>
+          </Panel>
+        </Row>
       );
     });
     return (

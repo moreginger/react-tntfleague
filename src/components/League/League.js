@@ -110,8 +110,8 @@ class League extends Component {
 			content = <AllTime data={this.state.allTime}/>;
 		}
 		return (
-			<Grid fluid>
-			  <Row xs={12} sm={8}>
+			<Grid>
+			  <Row>
 	        <Nav bsStyle='tabs' activeKey={this.state.tab} onSelect={this.handleSelect}>
 	          <NavItem eventKey={1}>Current</NavItem>
 	          <NavItem eventKey={2}>All Time</NavItem>

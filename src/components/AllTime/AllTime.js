@@ -38,8 +38,8 @@ class AllTime extends Component {
         <h4>Division 1 winners</h4>
         <CakeChart data={this.state.selectedNode}
                    onClick={this.onClick}
-                   coreRadius={100}
-                   ringWidth={80}/>
+                   coreRadius={200}
+                   ringWidth={100}/>
       </div>
     );
   }
