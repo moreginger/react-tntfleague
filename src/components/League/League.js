@@ -110,15 +110,13 @@ class League extends Component {
 			content = <AllTime data={this.state.allTime}/>;
 		}
 		return (
-			<Grid>
-			  <Row>
-	        <Nav bsStyle='tabs' activeKey={this.state.tab} onSelect={this.handleSelect}>
-	          <NavItem eventKey={1}>Current</NavItem>
-	          <NavItem eventKey={2}>All Time</NavItem>
-	        </Nav>
-					{content}
-        </Row>
-			</Grid>
+		  <Row>
+        <Nav bsStyle='tabs' activeKey={this.state.tab} onSelect={this.handleSelect}>
+          <NavItem eventKey={1}>Current</NavItem>
+          <NavItem eventKey={2}>All Time</NavItem>
+        </Nav>
+				{content}
+      </Row>
 		);
 	}
 }

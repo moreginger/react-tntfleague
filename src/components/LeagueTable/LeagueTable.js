@@ -12,6 +12,10 @@ function winFormat(cell, row) {
   return cell + '%';
 }
 
+function ptsFormat(cell, row) {
+  return '<strong>' + cell + '</strong>';
+}
+
 class LeagueTable extends Component {
 
   constructor(props) {
@@ -29,7 +33,7 @@ class LeagueTable extends Component {
         <TableHeaderColumn dataField='name' dataSort={true} isKey={true} dataFormat={nameFormat}>Team</TableHeaderColumn>
         <TableHeaderColumn dataField='difference' dataSort={true}>GD</TableHeaderColumn>
         <TableHeaderColumn dataField='win' dataSort={true} dataFormat={winFormat}>W</TableHeaderColumn>
-        <TableHeaderColumn dataField='points' dataSort={true}>PTS</TableHeaderColumn>
+        <TableHeaderColumn dataField='points' dataSort={true} dataFormat={ptsFormat}>PTS</TableHeaderColumn>
       </BootstrapTable>
     );
   }
