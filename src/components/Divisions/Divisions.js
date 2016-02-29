@@ -10,7 +10,7 @@ class Divisions extends Component {
   }
 
   render() {
-    let divs = this.props.data.map(d => {
+    let divs = this.props.data.divisions.map(d => {
       return (
         <Row>
           <Panel header={d.name}>

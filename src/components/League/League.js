@@ -12,16 +12,14 @@ class League extends Component {
 		super(props);
 		this.state = {
 			tab: 1,
-			divisions: [],
-			allTime: {
-			}
+			data: null
 		};
 		this.updateFromStore();
 	}
 
-  getDivisions = (fullTable) => {
+  getTable = (season) => {
 		let divisions = [];
-		fullTable.forEach(p => {
+		season.table.forEach(p => {
 			while (p.division > divisions.length) {
 				divisions.push({
 				  name: 'Division ' + (divisions.length + 1),
@@ -32,7 +30,10 @@ class League extends Component {
 			p.rank = table.length + 1;
 			table.push(p);
 		});
-		return divisions;
+		return {
+			divisions: divisions,
+			date: season.date
+		};
 	}
 
 	getTotalWins = (seasons, division) => {
@@ -63,23 +64,25 @@ class League extends Component {
 		if (seasons.length == 0) {
 			return;
 		}
-		let table = seasons[0].table;
-		table.forEach(x => {
+		let season = seasons[0];
+		season.table.forEach(x => {
 			let previous = seasons[1].table.findIndex(y => y.name === x.name)
 			x.previousRank = previous !== -1 ? previous + 1 : -1;
 		});
-		let divisions = this.getDivisions(table);
+		season = this.getTable(season);
 	  let allTime = this.getTotalWins(seasons, 1);
 		this.setState({
-			divisions: divisions,
-			allTime: {
-				value: allTime.reduce((sum, ele) => sum + ele.wins, 0),
-				label: 'CFL',
-				children: allTime.map(x => ({
-					label: x.name + ' - '+ x.wins,
-					value: x.wins,
-					children: []
-				}))
+			data: {
+				season: season,
+				allTime: {
+					value: allTime.reduce((sum, ele) => sum + ele.wins, 0),
+					label: 'CFL',
+					children: allTime.map(x => ({
+						label: x.name + ' - '+ x.wins,
+						value: x.wins,
+						children: []
+					}))
+				}
 			}
 		});
 	}
@@ -103,16 +106,19 @@ class League extends Component {
   }
 	render = () => {
 		var content;
-		if (this.state.tab === 1) {
-			content = <Divisions data={this.state.divisions}/>;
+		if (this.state.data === null) {
+			content = <span>Loading...</span>
+		}
+		else if (this.state.tab === 1) {
+			content = <Divisions data={this.state.data.season}/>;
 		}
 		else {
-			content = <AllTime data={this.state.allTime}/>;
+			content = <AllTime data={this.state.data.allTime}/>;
 		}
 		return (
 		  <Row>
         <Nav bsStyle='tabs' activeKey={this.state.tab} onSelect={this.handleSelect}>
-          <NavItem eventKey={1}>Current</NavItem>
+          <NavItem eventKey={1}>Table</NavItem>
           <NavItem eventKey={2}>All Time</NavItem>
         </Nav>
 				{content}
