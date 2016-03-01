@@ -17,25 +17,6 @@ class League extends Component {
 		this.updateFromStore();
 	}
 
-  getTable = (season) => {
-		let divisions = [];
-		season.table.forEach(p => {
-			while (p.division > divisions.length) {
-				divisions.push({
-				  name: 'Division ' + (divisions.length + 1),
-					table: []
-				});
-			}
-			let table = divisions[p.division - 1].table;
-			p.rank = table.length + 1;
-			table.push(p);
-		});
-		return {
-			divisions: divisions,
-			date: season.date
-		};
-	}
-
 	getTotalWins = (seasons, division) => {
 		let allTime = new Map();
 		seasons.slice(1).forEach(x => {
@@ -64,16 +45,19 @@ class League extends Component {
 		if (seasons.length == 0) {
 			return;
 		}
-		let season = seasons[0];
-		season.table.forEach(x => {
-			let previous = seasons[1].table.findIndex(y => y.name === x.name)
-			x.previousRank = previous !== -1 ? previous + 1 : -1;
+		seasons.reduce((newer, older) => {
+			newer.table.forEach(p => {
+				// TODO: Good enough for top 3 ranks. Not really correct because of divisions.
+				let previous = older.table.findIndex(y => y.name === p.name)
+				p.previousRank = previous !== -1 ? previous + 1 : -1;
+			});
+			return older;
 		});
-		season = this.getTable(season);
+
 	  let allTime = this.getTotalWins(seasons, 1);
 		this.setState({
 			data: {
-				season: season,
+				seasons: seasons,
 				allTime: {
 					value: allTime.reduce((sum, ele) => sum + ele.wins, 0),
 					label: 'CFL',
@@ -104,13 +88,14 @@ class League extends Component {
   		tab: selectedKey
   	});
   }
+
 	render = () => {
 		var content;
 		if (this.state.data === null) {
 			content = <span>Loading...</span>
 		}
 		else if (this.state.tab === 1) {
-			content = <Divisions data={this.state.data.season}/>;
+			content = <Divisions seasons={this.state.data.seasons} />;
 		}
 		else {
 			content = <AllTime data={this.state.data.allTime}/>;
