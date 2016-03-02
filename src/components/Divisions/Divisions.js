@@ -1,5 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 import { Row, Panel, ButtonToolbar, DropdownButton, MenuItem } from 'react-bootstrap';
+import moment from 'moment';
 
 import LeagueTable from '../LeagueTable';
 
@@ -37,7 +38,7 @@ class Divisions extends Component {
   render = () => {
     let opts = this.props.seasons.map((s, index) => {
       return (
-        <MenuItem eventKey={index}>{s.date.month + '-' + s.date.year}</MenuItem>
+        <MenuItem eventKey={index}>{moment({ year: s.date.year, month: s.date.month}).format('YYYY-MM')}</MenuItem>
       );
     });
     let divs = this.state.divisions.map(d => {
@@ -49,13 +50,11 @@ class Divisions extends Component {
     });
     return (
       <div>
-        <Panel>
-          <ButtonToolbar>
-            <DropdownButton bsStyle='primary' title='Season' onSelect={this.handleSelect}>
-              {opts}
-            </DropdownButton>
-          </ButtonToolbar>
-        </Panel>
+        <ButtonToolbar>
+          <DropdownButton bsStyle='default' title='Season' onSelect={this.handleSelect}>
+            {opts}
+          </DropdownButton>
+        </ButtonToolbar>
         {divs}
       </div>
     );
