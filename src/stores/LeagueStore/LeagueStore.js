@@ -1,8 +1,6 @@
 import Reflux from 'reflux';
 import { LeagueActions } from '../../actions/LeagueActions';
 
-import moment from 'moment';
-
 var _seasons = [];
 
 var store = Reflux.createStore({
