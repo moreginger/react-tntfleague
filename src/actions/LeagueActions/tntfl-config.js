@@ -1,1 +1,1 @@
-export const tntflurl = 'https://tmm-vm.cfl.io/tntflEAGUE-data/seasons'
+export const tntflurl = 'https://castor.cfl.io/tntflEAGUE-data/seasons'
