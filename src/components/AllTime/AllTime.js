@@ -18,7 +18,7 @@ class AllTime extends Component {
     };
   }
 
-  onClick = (node) => {
+  onClick(node) {
     if (node === this.state.selectedNode) {
       /* user clicked on the chart center - rendering parent node */
       this.setState({

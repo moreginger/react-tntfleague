@@ -17,7 +17,7 @@ class League extends Component {
 		this.updateFromStore();
 	}
 
-	getTotalWins = (seasons, division) => {
+	getTotalWins(seasons, division) {
 		let allTime = new Map();
 		seasons.slice(1).forEach(x => {
 			let inDivision = x.table.filter(p => p.division === division);
@@ -40,7 +40,7 @@ class League extends Component {
 		return allTime;
 	}
 
-	updateFromStore = () => {
+	updateFromStore() {
 		let seasons = LeagueStore.getAll();
 		if (seasons.length == 0) {
 			return;
@@ -71,25 +71,25 @@ class League extends Component {
 		});
 	}
 
-  onStoreChange = (evt) => {
+  onStoreChange(evt) {
 		this.updateFromStore();
   }
 
-  componentDidMount = () => {
+  componentDidMount() {
     this.unsubscribe = LeagueStore.listen(this.onStoreChange);
   }
 
-  componentWillUnmount = () => {
+  componentWillUnmount() {
   	this.unsubscribe();
   }
 
-  handleSelect = (selectedKey) => {
+  handleSelect(selectedKey) {
   	this.setState({
   		tab: selectedKey
   	});
   }
 
-	render = () => {
+	render() {
 		var content;
 		if (this.state.data === null) {
 			content = <span>Loading...</span>
