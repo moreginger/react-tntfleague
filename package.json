@@ -41,9 +41,6 @@
     "webpack": "^1.11.0",
     "webpack-dev-server": "^1.10.1"
   },
-  "peerDependencies": {
-    "react": "^15.1.0"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpack-server": "webpack-dev-server --hot --progress --colors",
