@@ -76,7 +76,7 @@ class League extends Component {
   }
 
   componentDidMount() {
-    this.unsubscribe = LeagueStore.listen(this.onStoreChange);
+    this.unsubscribe = LeagueStore.listen(evt => this.onStoreChange(evt));
   }
 
   componentWillUnmount() {
