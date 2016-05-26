@@ -102,7 +102,7 @@ class League extends Component {
 		}
 		return (
 		  <Row>
-        <Nav bsStyle='tabs' activeKey={this.state.tab} onSelect={this.handleSelect}>
+        <Nav bsStyle='tabs' activeKey={this.state.tab} onSelect={key => this.handleSelect(key)}>
           <NavItem eventKey={1}>Table</NavItem>
           <NavItem eventKey={2}>All Time</NavItem>
         </Nav>
