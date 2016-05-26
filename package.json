@@ -4,6 +4,7 @@
   "description": "tntfleague",
   "main": "lib/Tntfleague.js",
   "author": "Tim Moore",
+  "license": "MIT",
   "homepage": "https://github.com/moreginger/react-tntfleague",
   "repository": {
     "type": "git",
