@@ -62,7 +62,8 @@ class League extends Component {
 					value: allTime.reduce((sum, ele) => sum + ele.wins, 0),
 					label: 'CFL',
 					children: allTime.map(x => ({
-						label: x.name + ' - '+ x.wins,
+						label: x.name,
+						title: x.name + ' - ' + x.wins,
 						value: x.wins,
 						children: []
 					}))
