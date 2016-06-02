@@ -35,7 +35,7 @@ class League extends Component {
 			if (winsDiff !== 0) {
 				return winsDiff;
 			}
-			return b.lastWin - a.lastWin;
+			return a.lastWin - b.lastWin;
 		});
 		return allTime;
 	}
