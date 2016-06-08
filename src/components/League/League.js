@@ -17,7 +17,7 @@ class League extends Component {
 		this.updateFromStore();
 	}
 
-	getTotalWins = (seasons, division) => {
+	getTotalWins(seasons, division) {
 		let allTime = new Map();
 		seasons.slice(1).forEach(x => {
 			let inDivision = x.table.filter(p => p.division === division);
@@ -35,12 +35,12 @@ class League extends Component {
 			if (winsDiff !== 0) {
 				return winsDiff;
 			}
-			return b.lastWin - a.lastWin;
+			return a.lastWin - b.lastWin;
 		});
 		return allTime;
 	}
 
-	updateFromStore = () => {
+	updateFromStore() {
 		let seasons = LeagueStore.getAll();
 		if (seasons.length == 0) {
 			return;
@@ -62,7 +62,8 @@ class League extends Component {
 					value: allTime.reduce((sum, ele) => sum + ele.wins, 0),
 					label: 'CFL',
 					children: allTime.map(x => ({
-						label: x.name + ' - '+ x.wins,
+						label: x.name,
+						title: x.name + ' - ' + x.wins,
 						value: x.wins,
 						children: []
 					}))
@@ -71,25 +72,25 @@ class League extends Component {
 		});
 	}
 
-  onStoreChange = (evt) => {
+  onStoreChange(evt) {
 		this.updateFromStore();
   }
 
-  componentDidMount = () => {
-    this.unsubscribe = LeagueStore.listen(this.onStoreChange);
+  componentDidMount() {
+    this.unsubscribe = LeagueStore.listen(evt => this.onStoreChange(evt));
   }
 
-  componentWillUnmount = () => {
+  componentWillUnmount() {
   	this.unsubscribe();
   }
 
-  handleSelect = (selectedKey) => {
+  handleSelect(selectedKey) {
   	this.setState({
   		tab: selectedKey
   	});
   }
 
-	render = () => {
+	render() {
 		var content;
 		if (this.state.data === null) {
 			content = <span>Loading...</span>
@@ -102,7 +103,7 @@ class League extends Component {
 		}
 		return (
 		  <Row>
-        <Nav bsStyle='tabs' activeKey={this.state.tab} onSelect={this.handleSelect}>
+        <Nav bsStyle='tabs' activeKey={this.state.tab} onSelect={key => this.handleSelect(key)}>
           <NavItem eventKey={1}>Table</NavItem>
           <NavItem eventKey={2}>All Time</NavItem>
         </Nav>

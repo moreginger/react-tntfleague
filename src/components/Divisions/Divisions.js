@@ -13,7 +13,7 @@ class Divisions extends Component {
 		};
   }
 
-  getDivisions = (season) => {
+  getDivisions(season) {
     let divisions = [];
     season.table.forEach(p => {
       while (p.division > divisions.length) {
@@ -29,13 +29,13 @@ class Divisions extends Component {
     return divisions;
   }
 
-  handleSelect = (evt, index) => {
+  handleSelect(evt, index) {
     this.setState({
       divisions: this.getDivisions(this.props.seasons[index])
     });
   }
 
-  render = () => {
+  render() {
     let opts = this.props.seasons.map((s, index) => {
       return (
         <MenuItem eventKey={index}>{moment({ year: s.date.year, month: s.date.month}).format('YYYY-MM')}</MenuItem>

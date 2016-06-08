@@ -18,7 +18,7 @@ class AllTime extends Component {
     };
   }
 
-  onClick = (node) => {
+  onClick(node) {
     if (node === this.state.selectedNode) {
       /* user clicked on the chart center - rendering parent node */
       this.setState({
@@ -39,7 +39,8 @@ class AllTime extends Component {
         <CakeChart data={this.state.selectedNode}
                    onClick={this.onClick}
                    coreRadius={200}
-                   ringWidth={100}/>
+                   ringWidth={200}
+                   limit={2}/>
       </div>
     );
   }
