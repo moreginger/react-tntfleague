@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = {
 	entry: getEntrySources(['babel-polyfill', './src/Tntfleague.js']),
 	output: {
@@ -44,4 +46,19 @@ function getEntrySources(sources) {
 	}
 
 	return sources;
+}
+
+function getOutput() {
+	const output = {
+		filename: 'build/bundle.js'
+	};
+	if (process.env.NODE_ENV === 'production') {
+		output.publicPath = 'http://localhost:8080/';
+	}
+	else {
+		output.publicPath = 'static';
+		output.path = path.join(__dirname, 'static');
+	}
+
+	return output;
 }
