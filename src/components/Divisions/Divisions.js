@@ -29,7 +29,7 @@ class Divisions extends Component {
     return divisions;
   }
 
-  handleSelect(evt, index) {
+  handleSelect(index) {
     this.setState({
       divisions: this.getDivisions(this.props.seasons[index])
     });
@@ -51,7 +51,7 @@ class Divisions extends Component {
     return (
       <div>
         <ButtonToolbar>
-          <DropdownButton bsStyle='default' title='Season' onSelect={this.handleSelect}>
+          <DropdownButton bsStyle='default' title='Season' onSelect={(index) => this.handleSelect(index)}>
             {opts}
           </DropdownButton>
         </ButtonToolbar>
