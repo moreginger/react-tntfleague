@@ -47,8 +47,16 @@ class League extends Component {
 		}
 		seasons.reduce((newer, older) => {
 			newer.table.forEach(p => {
-				// TODO: Good enough for top 3 ranks. Not really correct because of divisions.
-				let previous = older.table.findIndex(y => y.name === p.name)
+				older.table.forEach((e, i) => {
+					e.globalRank = i;
+				});
+				var sorted = older.table.slice(0).sort((a, b) => {
+					if (a.division !== b.division) {
+						return a.division - b.division;
+					}
+					return a.globalRank - b.globalRank;
+				}); // Sort by division, otherwise given order is fine.
+				let previous = sorted.findIndex(y => y.name === p.name)
 				p.previousRank = previous !== -1 ? previous + 1 : -1;
 			});
 			return older;
