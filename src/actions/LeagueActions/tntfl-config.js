@@ -1,1 +1,1 @@
-export const tntflurl = 'https://salaca.cfl.io/tntflEAGUE-data/seasons'
+export const tntflurl = 'https://salaca.cfl.io:30332/seasons'
