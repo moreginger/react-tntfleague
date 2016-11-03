@@ -1,5 +1,5 @@
 import React, { PropTypes, Component } from 'react';
-import { Row, Panel, ButtonToolbar, DropdownButton, MenuItem } from 'react-bootstrap';
+import { Row, Panel, ButtonToolbar, DropdownButton, MenuItem, Jumbotron } from 'react-bootstrap';
 import moment from 'moment';
 
 import LeagueTable from '../LeagueTable';
@@ -8,8 +8,10 @@ class Divisions extends Component {
 
   constructor(props) {
     super(props);
+    var season = props.seasons[0];
+    var isCurrent = season.date.month === moment().get('month') && season.date.year === moment().get('year');
     this.state = {
-			divisions: this.getDivisions(props.seasons[0])
+			divisions: isCurrent ? this.getDivisions(season) : []
 		};
   }
 
@@ -56,6 +58,10 @@ class Divisions extends Component {
           </DropdownButton>
         </ButtonToolbar>
         {divs}
+        {divs.length === 0 && <Jumbotron>
+                                <h1>Oh no!</h1>
+                                <p>There are no games this month yet. Do something about it :)</p>
+                              </Jumbotron>}
       </div>
     );
   }
